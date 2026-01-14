@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="glass-panel">
+    <h2 class="text-center mb-4">{{ subject.name }} Testi</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {% for question in questions %}
+        <div class="card mb-4 p-3 bg-light text-dark">
+            <h5>{{ forloop.counter }}. {{ question.content }}</h5>
+            <div class="mt-2">
+                {% for option in question.options.all %}
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="question_{{ question.id }}"
+                        id="opt_{{ option.id }}" value="{{ option.id }}" required>
+                    <label class="form-check-label" for="opt_{{ option.id }}">
+                        {{ option.content }}
+                    </label>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+        <div class="d-grid">
+            <button type="submit" class="btn btn-success btn-lg">Yakunlash va Natijani ko'rish</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="glass-panel text-center">
+    <h1 class="mb-4">Sizning Natijangiz</h1>
+    <div
+        class="display-1 fw-bold {% if score >= 80 %}text-success{% elif score >= 50 %}text-warning{% else %}text-danger{% endif %}">
+        {{ score|floatformat:1 }}%
+    </div>
+    <p class="lead">Siz {{ total_questions }} ta savoldan {{ correct_answers }} tasiga to'g'ri javob berdingiz.</p>
+
+    <div class="mt-4">
+        <a href="{% url 'subject-list' %}" class="btn btn-primary btn-lg">Bosh sahifa</a>
+        <a href="{% url 'take-quiz' subject.id %}" class="btn btn-outline-light btn-lg">Qayta topshirish</a>
+    </div>
+
+    <hr class="my-5">
+
+    <h3 class="mb-4 text-start">Batafsil tahlil</h3>
+    <div class="text-start">
+        {% for item in attempted %}
+        <div class="card mb-3 text-dark">
+            <div class="card-body">
+                <h5 class="card-title">{{ forloop.counter }}. {{ item.question.content }}</h5>
+                <p class="card-text">
+                    Sizning javobingiz:
+                    <span class="badge {% if item.is_correct %}bg-success{% else %}bg-danger{% endif %}">
+                        {{ item.selected_option.content }}
+                    </span>
+                </p>
+                {% if not item.is_correct %}
+                <p class="card-text text-success">
+                    To'g'ri javob:
+                    {% for opt in item.question.options.all %}
+                    {% if opt.is_correct %}{{ opt.content }}{% endif %}
+                    {% endfor %}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

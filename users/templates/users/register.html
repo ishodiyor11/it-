@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="glass-panel mt-5">
+            <h2 class="text-center mb-4">Ro'yxatdan o'tish</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <div class="d-grid mt-4">
+                    <button class="btn btn-warning btn-lg" type="submit">Ro'yxatdan o'tish</button>
+                </div>
+            </form>
+            <div class="text-center mt-3">
+                <small>Hisobingiz bormi? <a href="{% url 'login' %}" class="text-white fw-bold">Kirish</a></small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
